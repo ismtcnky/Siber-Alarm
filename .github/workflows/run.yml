@@ -1,0 +1,18 @@
+name: Sakarya Alarm
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # her 5 dakikada bir
+  workflow_dispatch: # manuel başlatma
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install requests feedparser
+      - run: python bot.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
